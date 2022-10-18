@@ -7,6 +7,8 @@ COPY ./requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./src /code/src
+COPY ./error_list.json /code/error_list.json
+COPY ./docs /code/docs
 ENV PYTHONPATH "${PYTHONPATH}:/code/src"
 
 
