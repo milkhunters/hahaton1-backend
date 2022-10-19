@@ -69,6 +69,10 @@ class Base:
 class Config:
     debug: bool
     mode: str
+    build: Optional[int]
+    build_date: Optional[str]
+    branch: Optional[str]
+    commit_hash: Optional[str]
     is_secure_cookie: bool
     base: Base
     email: Email
@@ -97,9 +101,17 @@ def load_config() -> Config:
     config = consul.Consul(host="192.168.3.41").kv
     mode = os.getenv('MODE')
     debug = os.getenv('DEBUG')
+    build = os.getenv('VERSION_BUILD')
+    build_date = os.getenv('VERSION_BUILD_DATE')
+    branch = os.getenv('VERSION_BRANCH')
+    commit_hash = os.getenv('VERSION_COMMIT_HASH')
     return Config(
         debug=bool(int(debug)),
         mode=mode,
+        build=None if not build else int(build),
+        build_date=build_date,
+        branch=branch,
+        commit_hash=commit_hash,
         is_secure_cookie=bool(int(KVManager(config)[mode]["is_secure_cookie"].value())),
         base=Base(
             name=KVManager(config)["base"]["name"].value(),
