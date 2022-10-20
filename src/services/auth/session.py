@@ -11,7 +11,7 @@ config = load_config()
 class SessionManager:
     COOKIE_EXP = 31536000
     REDIS_EXP = 2592000
-    COOKIE_PATH = "/api"
+    COOKIE_PATH = "/"
     COOKIE_DOMAIN = None
     COOKIE_SESSION_KEY = "session_id"
 
