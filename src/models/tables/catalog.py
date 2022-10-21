@@ -1,6 +1,6 @@
 from tortoise import fields, models
 
-from models import PriceStates, PublicStates
+from models.state import PriceStates, PublicStates
 from models.state import ProductType, PurchaseType, ImportSubstitutionShield
 
 
@@ -10,7 +10,7 @@ class Product(models.Model):
     """
 
     id = fields.IntField(pk=True)
-    type = fields.IntEnumField(ProductType)
+    type = fields.IntEnumField(enum_type=ProductType)
     manufacturer = fields.CharField(max_length=255)
     trademark = fields.CharField(max_length=255)
     title = fields.CharField(max_length=255)
@@ -20,7 +20,7 @@ class Product(models.Model):
     description = fields.TextField(null=True)
     price = fields.FloatField()
     category = fields.ForeignKeyField('models.ProductCategory', related_name="products")
-    purchase_type = fields.IntEnumField(PurchaseType)
+    purchase_type = fields.IntEnumField(enum_type=PurchaseType)
     min_lot = fields.IntField(default=1)
 
     # Payment Type fk
@@ -28,7 +28,7 @@ class Product(models.Model):
     import_substitution_shield=fields.IntEnumField(ImportSubstitutionShield)
     compliance = fields.CharField(max_length=255, null=True)
     analogs = fields.CharField(max_length=255, null=True)
-    public_state = fields.IntEnumField(PublicStates, default=PublicStates.private)
+    public_state = fields.IntEnumField(enum_type=PublicStates)
     catalog = fields.ForeignKeyField('models.ProductCatalog', related_name="products")
     create_time = fields.DatetimeField(auto_now_add=True)
     update_time = fields.DatetimeField(auto_now=True, null=True)
@@ -45,7 +45,7 @@ class ProductCategory(models.Model):
     title = fields.CharField(max_length=255)
     catalog = fields.ForeignKeyField('models.ProductCatalog', related_name="categories")
     products = fields.ReverseRelation['Product']
-    public_state = fields.IntEnumField(PublicStates, default=PublicStates.private)
+    public_state = fields.IntEnumField(enum_type=PublicStates)
     create_time = fields.DatetimeField(auto_now_add=True)
     update_time = fields.DatetimeField(auto_now=True, null=True)
 
@@ -62,7 +62,7 @@ class ProductCatalog(models.Model):
     name = fields.CharField(max_length=255)
     categories = fields.ReverseRelation['ProductCategory']
     products = fields.ReverseRelation['Product']
-    price_state = fields.IntEnumField(enum_type=PriceStates, default=PriceStates.visible)
+    price_state = fields.IntEnumField(enum_type=PriceStates)
     arbitrarily_price_text = fields.CharField(max_length=255, null=True)
     create_time = fields.DatetimeField(auto_now_add=True)
     update_time = fields.DatetimeField(auto_now=True, null=True)
