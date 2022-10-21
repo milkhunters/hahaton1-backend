@@ -12,11 +12,20 @@ class User(BaseModel):
     Базовая схема пользователя
     """
     id: int
-    username: str
+    title:  Optional[str]
+    description:  Optional[str]
+    logo:  Optional[str]
+    cover:  Optional[str]
+    company_url:  Optional[str]
+    category_id: int
+    username:  Optional[str]
+    notification_email:  Optional[str]
+    phone_number: str
     email: str
     full_name: str
-    first_name: Optional[str]
-    last_name: Optional[str]
+    inn:  Optional[str]
+    legal_address:  Optional[str]
+    manufacture_address:  Optional[str]
     role_id: int
     state_id: int
     create_time: datetime
@@ -46,8 +55,15 @@ class User(BaseModel):
 
 class UserSignUp(BaseModel):
     username: str
-    email: str
     password: str
+    email: list[str]
+    title: str
+    inn: str
+    notification_email: str
+    phone_number: str
+    description: str
+    legal_address: int
+
 
     @validator('username')
     def username_len(cls, value):
@@ -87,8 +103,12 @@ class UserSignIn(BaseModel):
 
 class UserUpdate(BaseModel):
     username: Optional[str]
-    first_name: Optional[str]
-    last_name: Optional[str]
+    title: Optional[str]
+    description: Optional[str]
+    company_url: Optional[str]
+    notification_email: Optional[str]
+    manufacture_address: Optional[str]
+    full_name: Optional[str]
 
 
 class UserDelete(BaseModel):
