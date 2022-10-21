@@ -3,16 +3,14 @@ import logging
 from fastapi import APIRouter, Depends
 from fastapi.requests import Request
 from fastapi.responses import Response
-from tortoise.functions import Upper
 
-from src.config import load_docs
-from src.dependencies import JWTCookie
-from src.exceptions.api import APIError
-from src import utils
-from src.services.auth import authenticate, logout, refresh_tokens
-from src.views import ErrorAPIResponse, LoginResponse, RegisterResponse
-from src.models import schemas
-from src.services import repository
+from config import load_docs
+from dependencies import JWTCookie
+from exceptions.api import APIError
+from services.auth import authenticate, logout, refresh_tokens
+from views import ErrorAPIResponse, LoginResponse, RegisterResponse
+from models import schemas
+from services import repository
 
 router = APIRouter(responses={"400": {"model": ErrorAPIResponse}})
 docs = load_docs("auth.ini")

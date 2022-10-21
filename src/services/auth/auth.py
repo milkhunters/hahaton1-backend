@@ -1,10 +1,10 @@
 from starlette.requests import Request
 from starlette.responses import Response
 
-from src import utils
-from src.exceptions.api import APIError
-from src.models import UserStates, schemas
-from src.services import repository
+import utils
+from exceptions.api import APIError
+from models import UserStates, schemas
+from services import repository
 from . import JWTManager, SessionManager
 
 
