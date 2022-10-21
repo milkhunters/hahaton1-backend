@@ -8,11 +8,15 @@ class UserResponse(User):
 
 
 class UserOutResponse(BaseModel):
-
+    # TODO: описать то, что будуь видеть другие пользователи
     id: int
+    title: int
+    category_id: int
+    legal_adress: int
+    username: str
+    email: str
     role_id: int
     state_id: int
-    username: str
     full_name: str
 
     @validator("*", pre=True, each_item=False)
