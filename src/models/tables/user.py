@@ -13,10 +13,11 @@ class User(models.Model):
     description = fields.TextField()
     logo = fields.CharField(max_length=255)
     cover = fields.CharField(max_length=255)
-    # категория
+    category = fields.ForeignKeyField('models.CompanyCategories', related_name="companies")
     company_url = fields.CharField(255)
     username = fields.CharField(max_length=30, unique=True)
     hashed_password = fields.CharField(max_length=255)
+    products: fields.ReverseRelation["Product"]
     emails: fields.ReverseRelation['Email']
     notification_email = fields.CharField(max_length=100, unique=True)
     phone_number = fields.CharField(max_length=20)  # тк международные номера лайк
