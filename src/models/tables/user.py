@@ -3,7 +3,7 @@ from ..role import Role, MainRole as M, AdditionalRole as A
 from ..state import UserStates as S
 
 
-class Exhibitor(models.Model):
+class User(models.Model):
     """
     The Exhibitor model
     """
@@ -17,7 +17,7 @@ class Exhibitor(models.Model):
     company_url = fields.CharField(255)
     username = fields.CharField(max_length=30, unique=True)
     hashed_password = fields.CharField(max_length=255)
-    email = fields.CharField(max_length=100, unique=True) # pk таблица
+    emails: fields.ReverseRelation['Email']
     notification_email = fields.CharField(max_length=100, unique=True)
     phone_number = fields.CharField(max_length=20)  # тк международные номера лайк
     full_name = fields.CharField(max_length=64)
@@ -33,9 +33,9 @@ class Exhibitor(models.Model):
         exclude = ["hashed_password"]
 
 
-class ExhibitorDeleted(models.Model):
+class UserDeleted(models.Model):
     id = fields.IntField(pk=True)
     delete_time = fields.DatetimeField(auto_now_add=True)
 
     class Meta:
-        table = "exhibitor_deleted"
+        table = "user_deleted"

@@ -1,1 +1,1 @@
-from .exhibitor import Exhibitor, ExhibitorDeleted
+from .user import User, UserDeleted
