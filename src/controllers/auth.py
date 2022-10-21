@@ -54,7 +54,6 @@ async def sign_in(
     return await authenticate(user.username, user.password, response)
 
 
-
 @router.post(
     '/logout',
     dependencies=[Depends(JWTCookie())],
