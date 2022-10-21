@@ -37,43 +37,11 @@
   },
   "909" : {
     "http_status_code": 200,
-    "message": "Not permission"
+    "message": "Доступ запрещен"
   },
   "910" : {
     "http_status_code": 200,
     "message": "Не авторизован"
-  },
-  "911" : {
-    "http_status_code": 200,
-    "message": "Неправильный код подтверждения"
-  },
-  "912" : {
-    "http_status_code": 200,
-    "message": "Уже подтвержден"
-  },
-  "913" : {
-    "http_status_code": 200,
-    "message": "Время подтверждения истекло"
-  },
-  "914" : {
-    "http_status_code": 200,
-    "message": "Время подтверждения ещё не истекло"
-  },
-  "915" : {
-    "http_status_code": 200,
-    "message": "Сначала отправьте код подтверждения"
-  },
-  "916" : {
-    "http_status_code": 200,
-    "message": "Превышено количество попыток. Отправьте код повторно"
-  },
-  "917" : {
-    "http_status_code": 404,
-    "message": "Публикация не найдена"
-  },
-  "918" : {
-    "http_status_code": 401,
-    "message": "Невозможно запросить больше 100 публикаций за раз"
   },
   "919" : {
     "http_status_code": 200,
@@ -86,9 +54,5 @@
   "921" : {
     "http_status_code": 200,
     "message": "Password содержит ошибки"
-  },
-   "922" : {
-    "http_status_code": 200,
-    "message": "Email уже зарегистрирован"
   }
 }
