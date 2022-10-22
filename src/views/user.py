@@ -12,7 +12,7 @@ class UserOutResponse(BaseModel):
     id: int
     title: int
     category_id: int
-    legal_adress: int
+    legal_address: int
     username: str
     email: str
     role_id: int
