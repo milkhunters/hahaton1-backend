@@ -1,12 +1,18 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 
 from pydantic import BaseModel, validator, ValidationError
 from tortoise import fields
 
-from models import PublicStates
+from models.state import PublicStates
 from models.state import VerificationState
+
 from utils import validators
+from .email import Email
+from .product import Product
+from .product import ProductCatalog
+from .partner import Partner
+from .portfolio import PortfolioCase
 
 
 class Company(BaseModel):
@@ -16,12 +22,12 @@ class Company(BaseModel):
     logo: Optional[str]
     cover: Optional[str]
     category: Optional['CompanyCategory']
-    exhibitor: 'User'  # исключать, когда вложение
+    exhibitor: Optional[Any]
     company_url: Optional[str]
     products: Optional[list['Product']]
     emails: Optional[list['Email']]
     catalog: Optional['ProductCatalog']
-    partners = Optional[list['Partner']]
+    partners: Optional[list['Partner']]
     locations: Optional[list['CompanyLocation']]
     reviews: Optional[list['CompanyReview']]
     cases: Optional[list['PortfolioCase']]
@@ -35,11 +41,12 @@ class Company(BaseModel):
 
 
 class CompanyCategory(BaseModel):
-    id = fields.IntField(pk=True)
-    title = fields.CharField(max_length=255)
-    companies = fields.ReverseRelation['Company']
-    create_time = fields.DatetimeField(auto_now_add=True)
-    update_time = fields.DatetimeField(auto_now=True, null=True)
+    id: int
+    title: str
+    companies: Optional[list['Company']]
+    create_time: datetime
+    update_time: Optional[datetime]
+
 
 class CompanyLocation(BaseModel):
     id: int
@@ -51,7 +58,7 @@ class CompanyLocation(BaseModel):
     partner_url: str
     is_active: bool
     create_time: datetime
-    update_time: datetime
+    update_time: Optional[datetime]
 
 
 class CompanyReviewVerificationInfo(BaseModel):
@@ -74,3 +81,10 @@ class CompanyReview(BaseModel):
     verification_info: Optional[list['CompanyReviewVerificationInfo']]
     create_time: datetime
     update_time: Optional[datetime]
+
+
+Company.update_forward_refs()
+CompanyCategory.update_forward_refs()
+CompanyLocation.update_forward_refs()
+CompanyReview.update_forward_refs()
+CompanyReviewVerificationInfo.update_forward_refs()
