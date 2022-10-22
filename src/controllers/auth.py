@@ -30,9 +30,15 @@ async def sign_up(
         raise APIError(920)
     if await repository.user.get_user(username__iexact=user.username):
         raise APIError(903)
-    elif await repository.user.get_user(email__iexact=user.email):
-        raise APIError(922)
-    return await repository.user.create_user(**user.dict())
+    if await repository.user.get_user(email__iexact=user.email):
+        raise APIError(925)
+    if await repository.company.get(inn__iexact=user.inn):
+        raise APIError(924)
+    company = await repository.company.create(title=user.company_name, inn=user.inn)
+    await repository.user.create_user(
+        **user.dict(exclude={"inn", "company_name"}),
+        company=company
+    )
 
 
 @router.post(
@@ -48,7 +54,6 @@ async def sign_in(
 ):
     if is_auth:
         raise APIError(920)
-
     return await authenticate(user.username, user.password, response)
 
 
