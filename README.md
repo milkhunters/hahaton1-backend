@@ -26,6 +26,8 @@ REST API backend приложение для кейса
 docker run -d --restart=always -u 0 --name haha-ton-prod -e MODE=prod -e DEBUG=0 -p 8080:80 haha-ton-image:latest
 ```
 
+`DEBUG` необходимо установить в `1` для указания того, что path_url="/", иначе он будет установлен в `/api/v1/` если вы используйте реверс прокси с допольнительным путём.
+
 ### Список всех ключей конфигурации в `consul`
 
 ```
@@ -54,3 +56,12 @@ haha-ton/prod/jwt/JWT_REFRESH_SECRET_KEY
 ```
 
 Несмотря на то, что функции отправки email сообщений не реализованы, указание как миниму значения `null` в эти ключи **обязательно**.
+
+
+## Документация
+
+Документация является автогенерируемой и доступна по путям:
+- /docs
+- /redoc
+
+Также, документация доступна временно по пути [(https://hack.milkhunters.ru/api/v1/docs](https://hack.milkhunters.ru/api/v1/docs)
