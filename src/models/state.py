@@ -33,9 +33,30 @@ class ProductType(Enum):
 class PurchaseType(Enum):
     wholesale = 0
     retail = 1
+    all = 2
 
 
 @unique
-class ImportSubstitutionShield(Enum):
-    no = 0
-    yes = 1
+class DeliveryType(Enum):
+    pickup = 0
+    delivery = 1
+    pickup_and_delivery = 2
+
+
+@unique
+class PaymentType(Enum):
+    cash = 0
+    cashless = 1
+
+
+@unique
+class CaseContentType(Enum):
+    html = 0
+    video = 1
+
+
+@unique
+class VerificationState(Enum):
+    not_verified = 0
+    verified = 1
+    denied = 2

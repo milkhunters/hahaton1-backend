@@ -5,26 +5,15 @@ from ..state import UserStates as S
 
 class User(models.Model):
     """
-    The Exhibitor model
+    The User model
     """
 
     id = fields.IntField(pk=True)
-    title = fields.CharField(max_length=100)
-    description = fields.TextField()
-    logo = fields.CharField(max_length=255)
-    cover = fields.CharField(max_length=255)
-    category = fields.ForeignKeyField('models.CompanyCategories', related_name="companies")
-    company_url = fields.CharField(255)
+    full_name = fields.CharField(max_length=64)
     username = fields.CharField(max_length=30, unique=True)
     hashed_password = fields.CharField(max_length=255)
-    products: fields.ReverseRelation["Product"]
-    emails: fields.ReverseRelation['Email']
-    notification_email = fields.CharField(max_length=100, unique=True)
-    phone_number = fields.CharField(max_length=20)  # тк международные номера лайк
-    full_name = fields.CharField(max_length=64)
-    inn = fields.IntField()
-    legal_address = fields.TextField()
-    manufacture_address = fields.TextField()
+    email = fields.CharField(max_length=100, unique=True)
+    company = fields.OneToOneField('models.Company', related_name="exhibitor", null=True)
     role_id = fields.IntField(default=Role(M.user, A.one))
     state_id = fields.IntField(default=S.not_confirmed.value)
     create_time = fields.DatetimeField(auto_now_add=True)
