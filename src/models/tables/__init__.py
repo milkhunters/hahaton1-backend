@@ -9,4 +9,4 @@ from .email import Email
 from .company import Company, CompanyCategories, CompanyLocation
 from .portfolio import PortfolioCase, PortfolioVerificationInfo
 from .partner import Partner, PartnerVerificationInfo
-from .review import CompanyReview, CompanyReviewVerificationInfo
+from .company import CompanyReview, CompanyReviewVerificationInfo

@@ -2,7 +2,66 @@
 
 ![TeamCity build status](https://teamcity.milkhunters.ru/app/rest/builds/buildType:id:HahaTonBackend_ProdBuild/statusIcon.svg)
 
-Бэкенд приложение для решения кейса
+REST API backend приложение для кейса
 
-Стек: fastapi/python
-База данных: postgreql
+[Frontend часть](https://github.com/milkhunters/hahaton-frontend)
+
+Язык: Python
+
+Фреймфорк: FastAPI
+
+
+В качестве базы данных используется Postgrsql, но за счёт использования ORM её легко поменять
+
+Теоритически backend приложение выполняет все нефункциональные требования
+
+## Как запустить
+
+Для запуска требуется `docker`, `consul`, `redis` и `postgresql`
+
+Перед запуском необходимо собрать образ с помощью `docker build`
+
+Команда для запуска:
+```sh
+docker run -d --restart=always -u 0 --name haha-ton-prod -e MODE=prod -e DEBUG=0 -p 8080:80 haha-ton-image:latest
+```
+
+`DEBUG` необходимо установить в `1` для указания того, что path_url="/", иначе он будет установлен в `/api/v1/` если вы используйте реверс прокси с допольнительным путём.
+
+### Список всех ключей конфигурации в `consul`
+
+```
+haha-ton/base/contact/email
+haha-ton/base/contact/name
+haha-ton/base/contact/url
+haha-ton/base/description
+haha-ton/base/email/host
+haha-ton/base/email/isSSL
+haha-ton/base/email/isTLS
+haha-ton/base/email/password
+haha-ton/base/email/port
+haha-ton/base/email/user
+haha-ton/base/name
+haha-ton/prod/database/postgresql/host
+haha-ton/prod/database/postgresql/name
+haha-ton/prod/database/postgresql/password
+haha-ton/prod/database/postgresql/port
+haha-ton/prod/database/postgresql/username
+haha-ton/prod/database/redis/host
+haha-ton/prod/database/redis/password
+haha-ton/prod/database/redis/port
+haha-ton/prod/is_secure_cookie
+haha-ton/prod/jwt/JWT_ACCESS_SECRET_KEY
+haha-ton/prod/jwt/JWT_REFRESH_SECRET_KEY
+```
+
+Несмотря на то, что функции отправки email сообщений не реализованы, указание как миниму значения `null` в эти ключи **обязательно**.
+
+
+## Документация
+
+Документация является автогенерируемой и доступна по путям:
+- /docs
+- /redoc
+
+Также, документация доступна временно по пути [(https://hack.milkhunters.ru/api/v1/docs](https://hack.milkhunters.ru/api/v1/docs)

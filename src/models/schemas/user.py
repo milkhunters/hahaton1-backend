@@ -4,8 +4,8 @@ from typing import Optional
 from pydantic import BaseModel, validator, ValidationError
 from tortoise import fields
 
-from models.schemas.company import Company
 from utils import validators
+from .company import Company
 
 
 class User(BaseModel):
@@ -16,7 +16,7 @@ class User(BaseModel):
     full_name: str
     username: str
     email: str
-    company: Optional[Company]
+    company: Optional['Company']
     role_id: int
     state_id: int
 
@@ -105,3 +105,6 @@ class UserUpdate(BaseModel):
 class UserDelete(BaseModel):
     id: int
     delete_time: datetime
+
+
+User.update_forward_refs()
