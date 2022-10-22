@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 from tortoise.expressions import Q
 
+from models.tables import Company
 from src.models import tables
 from src.models import Role, A, M
 from src.models import UserStates
@@ -25,5 +26,8 @@ async def update(company_id: int, **kwargs) -> tables.Company:
     return company
 
 
-async def delete(company_id: int) -> None:
-    ...
+async def delete(company_id: int) -> dict[str, Company | None]:
+    company = await tables.Company.get_or_none(id=company_id)
+    await company.delete()
+    return {"resp": company}
+
