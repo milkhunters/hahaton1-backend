@@ -84,6 +84,20 @@ class CompanyReview(BaseModel):
     update_time: Optional[datetime]
 
 
+class CompanyUpdate(BaseModel):
+    title: Optional[str]
+    description: Optional[str]
+    about: Optional[str]
+    logo: Optional[str]
+    cover: Optional[str]
+    company_url: Optional[str]
+    phone_number: Optional[str]
+    inn: Optional[str]
+    legal_address: Optional[str]
+    manufacture_address: Optional[str]
+    import_substitution_shield: Optional[bool]
+
+
 Company.update_forward_refs()
 CompanyCategory.update_forward_refs()
 CompanyLocation.update_forward_refs()

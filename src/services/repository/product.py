@@ -1,15 +1,25 @@
-from typing import Optional, List
+from typing import Optional, List, Union
+
+from tortoise.expressions import Q
+from tortoise.fields import CharField, IntField
 
 from models.tables import Product
 from src.models import tables
 from models.state import VerificationState, PublicStates
 
 
-async def get(*args, **kwargs) -> Optional[tables.Product]:
-    return await tables.Product.filter(*args, **kwargs).first()
-
-
-async def get_products(*args, **kwargs) -> Optional[List[tables.Product]]:
+async def get(query: str = None, *args, **kwargs) -> Union[List[tables.Product], tables.Product, None]:
+    if query:
+        fields = [f for f in tables.Product._meta.fields_map.values() if isinstance(f, CharField)]
+        if query.isdigit():
+            fields += [f for f in tables.Product._meta.fields_map.values() if isinstance(f, IntField)]
+        queries = [Q(**{f.model_field_name: query}) for f in fields]
+        qs = Q()
+        for query in queries:
+            qs |= query
+        return await tables.Product.filter(qs)
+    if "id" in kwargs:
+        return await tables.Product.get_or_none(id=kwargs["id"])
     return await tables.Product.filter(*args, **kwargs)
 
 
