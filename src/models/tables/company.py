@@ -21,7 +21,7 @@ class Company(models.Model):
     reviews: fields.ReverseRelation['CompanyReview']
     cases: fields.ReverseRelation['PortfolioCase']
     phone_number = fields.CharField(max_length=20, null=True)  # тк международные номера лайк
-    inn = fields.IntField()
+    inn = fields.CharField(max_length=12, unique=True)
     legal_address = fields.TextField(null=True)
     manufacture_address = fields.TextField(null=True)
     import_substitution_shield = fields.BooleanField(default=False)

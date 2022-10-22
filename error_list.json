@@ -54,5 +54,13 @@
   "921" : {
     "http_status_code": 200,
     "message": "Password содержит ошибки"
+  },
+  "924" : {
+    "http_status_code": 200,
+    "message": "Инн уже существует"
+  },
+  "925" : {
+    "http_status_code": 200,
+    "message": "Email уже существует"
   }
 }
