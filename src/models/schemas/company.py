@@ -16,6 +16,7 @@ from .portfolio import PortfolioCase
 
 
 class Company(BaseModel):
+    id: int
     title: str
     description: Optional[str]
     about: Optional[str]
