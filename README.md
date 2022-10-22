@@ -2,7 +2,15 @@
 
 ![TeamCity build status](https://teamcity.milkhunters.ru/app/rest/builds/buildType:id:HahaTonBackend_ProdBuild/statusIcon.svg)
 
-Бэкенд приложение для решения кейса
+REST API backend приложение для кейса
 
-Стек: fastapi/python
-База данных: postgreql
+[Frontend часть](https://github.com/milkhunters/hahaton-frontend)
+
+Язык: Python
+
+Фреймфорк: FastAPI
+
+
+В качестве базы данных используется Postgrsql, но за счёт использования ORM её легко поменять
+
+Теоритически backend приложение выполняет все нефункциональные требования
