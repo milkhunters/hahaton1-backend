@@ -45,13 +45,16 @@ class User(BaseModel):
 class UserSignUp(BaseModel):
     username: str
     password: str
-    email: list[str]
-    title: str
+    email: str
+    full_name: str
+    company_name: str
     inn: str
-    notification_email: str
-    phone_number: str
-    description: str
-    legal_address: int
+
+    @validator("inn")
+    def inn_validator(cls, value: str):
+        if not value.isdigit():
+            raise ValidationError
+        return value
 
     @validator('username')
     def username_len(cls, value):

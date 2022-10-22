@@ -18,7 +18,7 @@ async def get_users(*args, **kwargs) -> Optional[List[tables.User]]:
 async def create_user(**kwargs) -> tables.User:
     return await tables.User.create(
         role_id=Role(M.user, A.one).value(),
-        state_id=UserStates.active.value,
+        state_id=UserStates.not_confirmed.value,
         hashed_password=get_hashed_password(kwargs.pop("password")),
         **kwargs
     )

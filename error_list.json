@@ -59,10 +59,17 @@
     "http_status_code": 200,
     "message": "Продукт не существует"
   },
-
   "923" : {
     "http_status_code": 200,
     "message": "Продукт уже верифицирован"
+  },
+  "924" : {
+    "http_status_code": 200,
+    "message": "Инн уже существует"
+  },
+  "925" : {
+    "http_status_code": 200,
+    "message": "Email уже существует"
   },
   "926" : {
     "http_status_code": 200,
