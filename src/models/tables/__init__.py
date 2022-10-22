@@ -1,5 +1,12 @@
 from .user import User, UserDeleted
-from .company_categories import CompanyCategories
-from .catalog import Product, ProductCatalog
-from .catalog import ProductCategory
+from .product import Product
+from .product import ProductVerificationInfo
+from .product import ProductCategory
+from .product import ProductCatalog
+from .product import ProductImages
+from .product import ProductCategoryVerificationInfo
 from .email import Email
+from .company import Company, CompanyCategories, CompanyLocation
+from .portfolio import PortfolioCase, PortfolioVerificationInfo
+from .partner import Partner, PartnerVerificationInfo
+from .review import CompanyReview, CompanyReviewVerificationInfo

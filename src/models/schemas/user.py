@@ -4,6 +4,7 @@ from typing import Optional
 from pydantic import BaseModel, validator, ValidationError
 from tortoise import fields
 
+from models.schemas.company import Company
 from utils import validators
 
 
@@ -12,24 +13,12 @@ class User(BaseModel):
     Базовая схема пользователя
     """
     id: int
-    title:  Optional[str]
-    description:  Optional[str]
-    logo:  Optional[str]
-    cover:  Optional[str]
-    company_url:  Optional[str]
-    category_id: int
-    username:  Optional[str]
-    notification_email:  Optional[str]
-    phone_number: str
-    email: str
     full_name: str
-    inn:  Optional[str]
-    legal_address:  Optional[str]
-    manufacture_address:  Optional[str]
+    username: str
+    email: str
+    company: Optional[Company]
     role_id: int
     state_id: int
-    create_time: datetime
-    update_time: datetime
 
     @validator("*", pre=True, each_item=False)
     def _tortoise_convert(cls, value):
@@ -63,7 +52,6 @@ class UserSignUp(BaseModel):
     phone_number: str
     description: str
     legal_address: int
-
 
     @validator('username')
     def username_len(cls, value):
