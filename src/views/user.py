@@ -1,10 +1,13 @@
+from typing import Optional
+
 from pydantic import BaseModel, validator
 from tortoise import fields
 from models.schemas import User
+from .companies import CompanyResponse
 
 
 class UserResponse(User):
-    pass
+    company: Optional['CompanyResponse']
 
 
 class UserOutResponse(BaseModel):

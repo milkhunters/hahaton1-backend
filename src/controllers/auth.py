@@ -8,9 +8,10 @@ from config import load_docs
 from dependencies import JWTCookie
 from exceptions.api import APIError
 from services.auth import authenticate, logout, refresh_tokens
-from views import ErrorAPIResponse, LoginResponse, RegisterResponse
+from views import ErrorAPIResponse, LoginResponse, RegisterResponse, UserResponse
 from models import schemas
 from services import repository
+from views.companies import CompanyResponse
 
 router = APIRouter(responses={"400": {"model": ErrorAPIResponse}})
 docs = load_docs("auth.ini")
@@ -43,7 +44,7 @@ async def sign_up(
 
 @router.post(
     "/signIn",
-    response_model=LoginResponse,
+    response_model=UserResponse,
     summary=docs["signIn"]["summary"],
     description=docs["signIn"]["description"]
 )
