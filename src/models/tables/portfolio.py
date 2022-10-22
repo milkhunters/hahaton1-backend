@@ -11,7 +11,7 @@ class PortfolioVerificationInfo(models.Model):
     id = fields.IntField(pk=True)
     status = fields.IntEnumField(enum_type=VerificationState)
     content = fields.TextField(null=True)
-    product = fields.ForeignKeyField('models.PortfolioCase', related_name="verification_info")
+    portfolio = fields.ForeignKeyField('models.PortfolioCase', related_name="verification_info")
     create_time = fields.DatetimeField(auto_now_add=True)
     update_time = fields.DatetimeField(auto_now=True, null=True)
 
