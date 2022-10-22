@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.config import load_config
+from config import load_config
 
 import utils
 from views import ErrorAPIResponse

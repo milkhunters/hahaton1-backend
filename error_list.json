@@ -4,91 +4,79 @@
     "message": "Ошибка декодирования запроса"
   },
   "901" : {
-    "http_status_code": 400,
+    "http_status_code": 200,
     "message": "Username содержит ошибки"
   },
   "902" : {
-    "http_status_code": 400,
+    "http_status_code": 200,
     "message": "Email содержит ошибки"
   },
   "903" : {
-    "http_status_code": 400,
+    "http_status_code": 200,
     "message": "Пользователь уже существует"
   },
   "904" : {
-    "http_status_code": 404,
+    "http_status_code": 200,
     "message": "Аккаунт не найден"
   },
   "905" : {
-    "http_status_code": 401,
+    "http_status_code": 200,
     "message": "Неверный пароль"
   },
   "906" : {
-    "http_status_code": 401,
+    "http_status_code": 200,
     "message": "Аккаунт заблокирован"
   },
   "907" : {
-    "http_status_code": 401,
+    "http_status_code": 200,
     "message": "Аккаунт не активирован"
   },
   "908" : {
-    "http_status_code": 403,
+    "http_status_code": 200,
     "message": "Не аутентифицирован"
   },
   "909" : {
-    "http_status_code": 403,
-    "message": "Not permission"
+    "http_status_code": 200,
+    "message": "Доступ запрещен"
   },
   "910" : {
-    "http_status_code": 401,
+    "http_status_code": 200,
     "message": "Не авторизован"
   },
-  "911" : {
-    "http_status_code": 400,
-    "message": "Неправильный код подтверждения"
-  },
-  "912" : {
-    "http_status_code": 400,
-    "message": "Уже подтвержден"
-  },
-  "913" : {
-    "http_status_code": 400,
-    "message": "Время подтверждения истекло"
-  },
-  "914" : {
-    "http_status_code": 400,
-    "message": "Время подтверждения ещё не истекло"
-  },
-  "915" : {
-    "http_status_code": 400,
-    "message": "Сначала отправьте код подтверждения"
-  },
-  "916" : {
-    "http_status_code": 400,
-    "message": "Превышено количество попыток. Отправьте код повторно"
-  },
-  "917" : {
-    "http_status_code": 404,
-    "message": "Публикация не найдена"
-  },
-  "918" : {
-    "http_status_code": 401,
-    "message": "Невозможно запросить больше 100 публикаций за раз"
-  },
   "919" : {
-    "http_status_code": 404,
+    "http_status_code": 200,
     "message": "Не найден"
   },
   "920" : {
-    "http_status_code": 401,
+    "http_status_code": 200,
     "message": "Уже авторизован"
   },
   "921" : {
-    "http_status_code": 400,
+    "http_status_code": 200,
     "message": "Password содержит ошибки"
   },
-   "922" : {
-    "http_status_code": 400,
-    "message": "Email уже зарегистрирован"
+  "922" : {
+    "http_status_code": 200,
+    "message": "Продукт не существует"
+  },
+  "923" : {
+    "http_status_code": 200,
+    "message": "Продукт уже верифицирован"
+  },
+  "924" : {
+    "http_status_code": 200,
+    "message": "Инн уже существует"
+  },
+  "925" : {
+    "http_status_code": 200,
+    "message": "Email уже существует"
+  },
+  "926" : {
+    "http_status_code": 200,
+    "message": "Категории не существует"
+  },
+  "927" : {
+    "http_status_code": 200,
+    "message": "Категория уже верифицирована"
   }
 }

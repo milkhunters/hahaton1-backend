@@ -5,6 +5,7 @@ from pydantic import BaseModel, validator, ValidationError
 from tortoise import fields
 
 from utils import validators
+from .company import Company
 
 
 class User(BaseModel):
@@ -12,15 +13,12 @@ class User(BaseModel):
     Базовая схема пользователя
     """
     id: int
+    full_name: str
     username: str
     email: str
-    full_name: str
-    first_name: Optional[str]
-    last_name: Optional[str]
+    company: Optional['Company']
     role_id: int
     state_id: int
-    create_time: datetime
-    update_time: datetime
 
     @validator("*", pre=True, each_item=False)
     def _tortoise_convert(cls, value):
@@ -46,8 +44,17 @@ class User(BaseModel):
 
 class UserSignUp(BaseModel):
     username: str
-    email: str
     password: str
+    email: str
+    full_name: str
+    company_name: str
+    inn: str
+
+    @validator("inn")
+    def inn_validator(cls, value: str):
+        if not value.isdigit():
+            raise ValidationError
+        return value
 
     @validator('username')
     def username_len(cls, value):
@@ -87,10 +94,17 @@ class UserSignIn(BaseModel):
 
 class UserUpdate(BaseModel):
     username: Optional[str]
-    first_name: Optional[str]
-    last_name: Optional[str]
+    title: Optional[str]
+    description: Optional[str]
+    company_url: Optional[str]
+    notification_email: Optional[str]
+    manufacture_address: Optional[str]
+    full_name: Optional[str]
 
 
 class UserDelete(BaseModel):
     id: int
     delete_time: datetime
+
+
+User.update_forward_refs()

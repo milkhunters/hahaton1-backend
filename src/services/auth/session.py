@@ -11,7 +11,7 @@ config = load_config()
 class SessionManager:
     COOKIE_EXP = 31536000
     REDIS_EXP = 2592000
-    COOKIE_PATH = "/api"
+    COOKIE_PATH = "/"
     COOKIE_DOMAIN = None
     COOKIE_SESSION_KEY = "session_id"
 
@@ -55,7 +55,7 @@ class SessionManager:
             value=str(session_id),
             secure=config.is_secure_cookie,
             httponly=True,
-            samesite="Strict",
+            samesite="lax",
             max_age=self.COOKIE_EXP,
             path=self.COOKIE_PATH
         )
@@ -73,7 +73,7 @@ class SessionManager:
             key=self.COOKIE_SESSION_KEY,
             secure=config.is_secure_cookie,
             httponly=True,
-            samesite="Strict",
+            samesite="lax",
             path=self.COOKIE_PATH
         )
 

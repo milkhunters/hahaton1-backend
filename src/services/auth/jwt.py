@@ -19,7 +19,7 @@ class JWTManager:
     JWT_REFRESH_SECRET_KEY = config.base.jwt.JWT_REFRESH_SECRET_KEY
 
     COOKIE_EXP = 31536000
-    COOKIE_PATH = "/api"
+    COOKIE_PATH = "/"
     COOKIE_DOMAIN = None
     COOKIE_ACCESS_KEY = "access_token"
     COOKIE_REFRESH_KEY = "refresh_token"
@@ -108,7 +108,7 @@ class JWTManager:
             value=tokens.access_token,
             secure=config.is_secure_cookie,
             httponly=True,
-            samesite="Strict",
+            samesite="lax",
             max_age=self.COOKIE_EXP,
             path=self.COOKIE_PATH,
             domain=self.COOKIE_DOMAIN
@@ -118,7 +118,7 @@ class JWTManager:
             value=tokens.refresh_token,
             secure=config.is_secure_cookie,
             httponly=True,
-            samesite="Strict",
+            samesite="lax",
             max_age=self.COOKIE_EXP,
             path=self.COOKIE_PATH,
             domain=self.COOKIE_DOMAIN

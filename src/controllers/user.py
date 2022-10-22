@@ -5,11 +5,10 @@ from fastapi.requests import Request
 from fastapi.responses import Response
 
 from models import schemas
-from src.config import load_docs
-from src.dependencies import JWTCookie
-from src.exceptions.api import APIError
-from src import utils
-from src.services.auth import logout
+from config import load_docs
+from dependencies import JWTCookie
+from exceptions.api import APIError
+from services.auth import logout
 from views import ErrorAPIResponse
 from views import UserResponse
 from views import UserOutResponse

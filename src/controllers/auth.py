@@ -3,16 +3,15 @@ import logging
 from fastapi import APIRouter, Depends
 from fastapi.requests import Request
 from fastapi.responses import Response
-from tortoise.functions import Upper
 
-from src.config import load_docs
-from src.dependencies import JWTCookie
-from src.exceptions.api import APIError
-from src import utils
-from src.services.auth import authenticate, logout, refresh_tokens
-from src.views import ErrorAPIResponse, LoginResponse, RegisterResponse
-from src.models import schemas
-from src.services import repository
+from config import load_docs
+from dependencies import JWTCookie
+from exceptions.api import APIError
+from services.auth import authenticate, logout, refresh_tokens
+from views import ErrorAPIResponse, LoginResponse, RegisterResponse, UserResponse
+from models import schemas
+from services import repository
+from views.companies import CompanyResponse
 
 router = APIRouter(responses={"400": {"model": ErrorAPIResponse}})
 docs = load_docs("auth.ini")
@@ -32,14 +31,20 @@ async def sign_up(
         raise APIError(920)
     if await repository.user.get_user(username__iexact=user.username):
         raise APIError(903)
-    elif await repository.user.get_user(email__iexact=user.email):
-        raise APIError(922)
-    return await repository.user.create_user(**user.dict())
+    if await repository.user.get_user(email__iexact=user.email):
+        raise APIError(925)
+    if await repository.company.get(inn__iexact=user.inn):
+        raise APIError(924)
+    company = await repository.company.create(title=user.company_name, inn=user.inn)
+    await repository.user.create_user(
+        **user.dict(exclude={"inn", "company_name"}),
+        company=company
+    )
 
 
 @router.post(
     "/signIn",
-    response_model=LoginResponse,
+    response_model=UserResponse,
     summary=docs["signIn"]["summary"],
     description=docs["signIn"]["description"]
 )
@@ -50,9 +55,7 @@ async def sign_in(
 ):
     if is_auth:
         raise APIError(920)
-
     return await authenticate(user.username, user.password, response)
-
 
 
 @router.post(
