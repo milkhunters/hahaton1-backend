@@ -1,5 +1,6 @@
 from typing import Optional, List
 
+from models.tables import Product
 from src.models import tables
 from models.state import VerificationState, PublicStates
 
@@ -22,7 +23,10 @@ async def update(product_id: int, **kwargs) -> tables.Product:
     return product
 
 
-
+async def delete(product_id: int) -> dict[str, Product | None]:
+    product = await tables.Product.get_or_none(id=product_id)
+    await product.delete()
+    return {"resp": product}
 
 
 async def verify_product(product_id: int, state: VerificationState, content: str = None):

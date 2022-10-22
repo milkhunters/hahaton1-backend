@@ -36,7 +36,7 @@ async def verify_exhibitor(exhibitor_id: int, comment: str, is_accept: bool):
 
 @router.post(
     "/product",
-    response_model=UserResponse,
+    # response_model=UserResponse, нужно
     # summary=docs["acceptProduct"]["summary"],
     # description=docs["acceptProduct"]["description"]
 )
@@ -49,9 +49,16 @@ async def verify_product(product_id: int, comment: Optional[str], state: Verific
     else:
         await repository.product.verify_product(product_id, state, comment)
     # TODO: добавить функцию, которая посылает комментарий на почту
+    return product
 
 
+@router.post("/product_category")
 async def verify_product_category(category_id: int, state: VerificationState):
     product_category = await repository.product.get(id=category_id)
     if not product_category:
         raise APIError(926)
+    elif product_category.public_state == PublicStates.public:
+        raise APIError(927)
+    else:
+        await repository.product.verify_product_category(category_id, state)
+    return product_category
