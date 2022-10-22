@@ -37,7 +37,9 @@ async def authenticate(
         raise APIError(906)
     if UserStates(user.state_id) == UserStates.deleted:
         raise APIError(904)
-    # установка токенов
+    # Подгрузка связей
+    await user.fetch_related("company")
+    # Установка токенов
     tokens = schemas.Tokens(
         access_token=jwt.generate_access_token(user.id, user.username, user.role_id, user.state_id),
         refresh_token=jwt.generate_refresh_token(user.id, user.username, user.role_id, user.state_id)
