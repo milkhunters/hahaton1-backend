@@ -14,10 +14,11 @@ async def get(*args, **kwargs) -> Optional[tables.Company]:
 
 
 async def get_companies(query: str = None, *args, **kwargs) -> Optional[List[tables.Company]]:
+
     if query:
-        fields = [f for f in tables.Company._meta.fields if isinstance(f, CharField)]
+        fields = [f for f in tables.Company._meta.fields_map.values() if isinstance(f, CharField)]
         if query.isdigit():
-            fields += [f for f in tables.Company._meta.fields if isinstance(f, IntField)]
+            fields += [f for f in tables.Company._meta.fields_map.values() if isinstance(f, IntField)]
         queries = [Q(**{f.model_field_name: query}) for f in fields]
         qs = Q()
         for query in queries:
