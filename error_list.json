@@ -43,6 +43,10 @@
     "http_status_code": 200,
     "message": "Не авторизован"
   },
+  "911" : {
+    "http_status_code": 200,
+    "message": "Инн должен содержать 12 цифр"
+  },
   "919" : {
     "http_status_code": 200,
     "message": "Не найден"

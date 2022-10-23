@@ -26,6 +26,8 @@ async def sign_up(
         user: schemas.UserSignUp,
         is_auth=Depends(JWTCookie(auto_error=False)),
 ):
+    if len(user.inn) != 12:
+        raise APIError(api_code=911)
     if is_auth:
         raise APIError(920)
     if await repository.user.get(username__iexact=user.username):
