@@ -27,3 +27,4 @@ async def update(company_id: int, data: schemas.CompanyUpdate):
 @router.post("/delete")
 async def delete(company_id: int):
     await repository.company.delete(company_id)
+

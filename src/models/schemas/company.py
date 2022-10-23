@@ -84,7 +84,7 @@ class CompanyReview(BaseModel):
     update_time: Optional[datetime]
 
 
-class CompanyUpdate(BaseModel):
+class   CompanyUpdate(BaseModel):
     title: Optional[str]
     description: Optional[str]
     about: Optional[str]
