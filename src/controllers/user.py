@@ -32,9 +32,15 @@ async def get_current_user(request: Request):
 async def get_user(
         user_id: Optional[int] = None,
         query: Optional[str] = None):
-    user = await repository.user.get(id=user_id, query=query)
+    if user_id:
+        user = await repository.user.get(id=user_id)
+    elif query:
+        user = await repository.user.get(query=query)
+    else:
+        user = await repository.user.get()
+        print(user[2].company.id)
     if not user:
-        raise APIError(api_code=904)
+        raise APIError(api_code=919)
     return user
 
 
