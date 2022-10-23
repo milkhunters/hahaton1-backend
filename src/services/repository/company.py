@@ -27,6 +27,7 @@ async def get(
             await tables.Company.fetch_for_list(companies, "exhibitor")
         return companies
 
+
     if set(kwargs) & set([f.model_field_name for f in tables.Company._meta.fields_map.values() if f.unique]):
         company = await tables.Company.get_or_none(*args, **kwargs)
         if company:
@@ -37,6 +38,7 @@ async def get(
     if companies:
         await tables.Company.fetch_for_list(companies, "exhibitor")
     return companies
+
 
 
 async def create(**kwargs) -> tables.Company:

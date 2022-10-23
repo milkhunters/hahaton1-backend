@@ -97,6 +97,24 @@ class ProductCatalog(BaseModel):
     create_time: datetime
     update_time: Optional[datetime]
 
+    @validator("*", pre=True, each_item=False)
+    def _tortoise_convert(cls, value):
+        """
+        Необходимо для преобразования
+        некоторых вызываемых полей модели
+        и для Reverse и ManyToMany связей
+
+        :param value:
+        :return:
+        """
+        # Вызываемые поля
+        if callable(value):
+            return value()
+        # Конвертирование ManyToManyRelation в список
+        if isinstance(value, (fields.ManyToManyRelation, fields.ReverseRelation)):
+            return list(value)
+        return value
+
 
 class ProductImagesUpdate(BaseModel):
     image: str
@@ -120,6 +138,15 @@ class ProductUpdate(BaseModel):
     compliance: Optional[str]
     analogs: Optional[str]
     public_state: Optional[PublicStates]
+
+
+class ProductCatalogCreate(BaseModel):
+    """
+    The ProductCatalogCreate model
+    """
+    title: str
+    price_state: PriceStates
+    arbitrarily_price_text: Optional[str]
 
 
 class ProductImagesCreate(BaseModel):
@@ -150,7 +177,7 @@ class ProductCreate(BaseModel):
     verification_info: Optional[list[ProductVerificationInfo]]
     create_time: datetime
     update_time: Optional[datetime]
-
+    
 
 Product.update_forward_refs()
 ProductCategory.update_forward_refs()
