@@ -17,3 +17,11 @@ from views import ErrorAPIResponse, UserOutResponse, LoginResponse, RegisterResp
 router = APIRouter(prefix="/product", responses={"400": {"model": ErrorAPIResponse}})
 
 
+@router.post("/update", response_model=views.ProductResponse)
+async def update(product_id: int, data: schemas.ProductUpdate):
+    await repository.product.update(product_id, **data.dict(exclude_unset=True))
+
+
+@router.delete("/delete")
+async def delete(product_id: int):
+    await repository.product.delete(product_id)

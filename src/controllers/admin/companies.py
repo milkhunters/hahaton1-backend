@@ -17,7 +17,7 @@ async def get(company_id: Optional[int] = None, query: Optional[str] = None):
 
 @router.post("/update", response_model=CompanyResponse)
 async def update(company_id: int, data: schemas.CompanyUpdate):
-    await repository.company.update(company_id, **data.dict(exclude_unset=True))
+    return await repository.company.update(company_id, **data.dict(exclude_unset=True))
 
 
 @router.post("/delete")
