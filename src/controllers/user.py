@@ -1,10 +1,11 @@
 import logging
+from typing import Optional, Union, List
 
 from fastapi import APIRouter, Depends
 from fastapi.requests import Request
 from fastapi.responses import Response
 
-from models import schemas
+from models import schemas, tables
 from config import load_docs
 from dependencies import JWTCookie
 from exceptions.api import APIError
@@ -21,15 +22,17 @@ docs = load_docs("auth.ini")
 
 @router.get("/current", dependencies=[Depends(JWTCookie())], response_model=UserResponse)
 async def get_current_user(request: Request):
-    user = await repository.user.get_user(id=request.user.id)
+    user = await repository.user.get(id=request.user.id)
     if not user:
         raise APIError(api_code=404)
     return user
 
 
-@router.get("/{user_id}", response_model=UserOutResponse)
-async def get_user(user_id: int):
-    user = await repository.user.get_user(id=user_id)
+@router.get("/get", response_model=Union[list[UserResponse], UserResponse])
+async def get_user(
+        user_id: Optional[int] = None,
+        query: Optional[str] = None):
+    user = await repository.user.get(id=user_id, query=query)
     if not user:
         raise APIError(api_code=904)
     return user

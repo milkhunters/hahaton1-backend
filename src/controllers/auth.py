@@ -29,9 +29,9 @@ async def sign_up(
 ):
     if is_auth:
         raise APIError(920)
-    if await repository.user.get_user(username__iexact=user.username):
+    if await repository.user.get(username__iexact=user.username):
         raise APIError(903)
-    if await repository.user.get_user(email__iexact=user.email):
+    if await repository.user.get(email__iexact=user.email):
         raise APIError(925)
     if await repository.company.get(inn__iexact=user.inn):
         raise APIError(924)

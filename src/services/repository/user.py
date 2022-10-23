@@ -1,5 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 from tortoise.expressions import Q
+from tortoise.fields import CharField, IntField
 
 from src.models import tables
 from src.models import Role, A, M
@@ -7,8 +8,29 @@ from src.models import UserStates
 from src.utils import get_hashed_password
 
 
-async def get_user(*args, **kwargs) -> Optional[tables.User]:
-    return await tables.User.filter(*args, **kwargs).first()
+async def get(
+        id: int = None,
+        query: str = None,
+        *args, **kwargs
+) -> Union[List[tables.User], tables.User, None]:
+    if query:
+        fields = [f for f in tables.User._meta.fields_map.values() if isinstance(f, CharField)]
+        if query.isdigit():
+            fields += [f for f in tables.User._meta.fields_map.values() if isinstance(f, IntField)]
+        queries = [Q(**{f.model_field_name: query}) for f in fields]
+        qs = Q()
+        for query in queries:
+            qs |= query
+
+        users = await tables.User.filter(qs).limit(40)
+        await tables.User.fetch_for_list(users, "company")
+        return users
+
+    if id:
+        user = await tables.User.filter(id=id).first()
+        await user.fetch_related("company")
+        return user
+    return await tables.User.filter(*args, **kwargs).limit(40)
 
 
 async def get_users(*args, **kwargs) -> Optional[List[tables.User]]:
@@ -25,7 +47,7 @@ async def create_user(**kwargs) -> tables.User:
 
 
 async def update_user(user_id: int, **kwargs) -> tables.User:
-    user = await tables.User.update_from_dict(await get_user(id=user_id), kwargs)
+    user = await tables.User.update_from_dict(await get(id=user_id), kwargs)
     await user.save()
     return user
 

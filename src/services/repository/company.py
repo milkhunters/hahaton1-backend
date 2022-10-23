@@ -13,7 +13,11 @@ async def get(*args, **kwargs) -> Optional[tables.Company]:
     return await tables.Company.filter(*args, **kwargs).first()
 
 
-async def get_companies(id: int = None, query: str = None, *args, **kwargs) -> Union[List[tables.Company], tables.Company, None]:
+async def get_companies(
+        id: int = None,
+        query: str = None,
+        *args, **kwargs
+) -> Union[List[tables.Company], tables.Company, None]:
     if query:
         fields = [f for f in tables.Company._meta.fields_map.values() if isinstance(f, CharField)]
         if query.isdigit():
@@ -22,9 +26,15 @@ async def get_companies(id: int = None, query: str = None, *args, **kwargs) -> U
         qs = Q()
         for query in queries:
             qs |= query
-        return await tables.Company.filter(qs)
+
+        companies = await tables.Company.filter(qs).limit(40)
+        await tables.Company.fetch_for_list(companies, "exhibitor")
+        return companies
+
     if id:
-        return await tables.Company.filter(id=id).first()
+        company = await tables.Company.get_or_none(id=id)
+        await tables.Company.fetch_related(company, "exhibitor")
+        return company
     return await tables.Company.filter(*args, **kwargs).limit(40)
 
 
