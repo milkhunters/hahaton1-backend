@@ -74,3 +74,9 @@ async def create_catalog(company_id: int, **kwargs) -> tables.ProductCatalog:
     return catalog
 
 
+async def create_category(catalog_id: int, **kwargs) -> tables.ProductCategory:
+    catalog = await tables.ProductCatalog.get_or_none(id=catalog_id)
+    category = await tables.ProductCategory.create(**kwargs)
+    catalog.categories.add(category)
+    await catalog.save()
+    return category

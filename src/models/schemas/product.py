@@ -179,6 +179,17 @@ class ProductCreate(BaseModel):
     update_time: Optional[datetime]
     
 
+class ProductCategoryCreate(BaseModel):
+    """
+    The ProductCategoryCreate model
+    """
+    title: str
+    catalog: Optional['ProductCatalog']
+    products: Optional[list['Product']]
+    verification_info: Optional[list['ProductCategoryVerificationInfo']]
+    public_state: PublicStates
+
+
 Product.update_forward_refs()
 ProductCategory.update_forward_refs()
 ProductCatalog.update_forward_refs()
