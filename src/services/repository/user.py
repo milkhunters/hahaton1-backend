@@ -9,7 +9,6 @@ from src.utils import get_hashed_password
 
 
 async def get(
-        id: int = None,
         query: str = None,
         *args, **kwargs
 ) -> Union[List[tables.User], tables.User, None]:
@@ -26,8 +25,8 @@ async def get(
         await tables.User.fetch_for_list(users, "company")
         return users
 
-    if id:
-        user = await tables.User.filter(id=id).first()
+    if [f for f in tables.User._meta.fields_map.values() if f.unique]:
+        user = await tables.User.filter(**kwargs).first()
         await user.fetch_related("company")
         return user
     return await tables.User.filter(*args, **kwargs).limit(40)
