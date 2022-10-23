@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from fastapi import APIRouter
 
@@ -11,9 +11,9 @@ import views
 router = APIRouter()
 
 
-@router.get("/get", response_model=list[views.ProductResponse])
+@router.get("/get", response_model=Union[list[views.ProductResponse], views.ProductResponse])
 async def get(product_id: Optional[int] = None, query: Optional[str] = None):
-    await repository.product.get(query, id=product_id)
+    await repository.product.get(query=query, id=product_id)
 
 
 @router.post("/update", response_model=views.ProductResponse)
