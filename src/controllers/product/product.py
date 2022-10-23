@@ -3,7 +3,6 @@ from typing import Optional, Union
 from fastapi import APIRouter
 
 from models import schemas
-from models.state import VerificationState, UserStates, PublicStates
 from services import repository
 
 import views
@@ -14,6 +13,11 @@ router = APIRouter()
 @router.get("/get", response_model=Union[list[views.ProductResponse], views.ProductResponse])
 async def get(product_id: Optional[int] = None, query: Optional[str] = None):
     await repository.product.get(query=query, id=product_id)
+
+
+# @router.get("/create", response_model=)
+# async def create():
+#     await repository.product.create(**)
 
 
 @router.post("/update", response_model=views.ProductResponse)
