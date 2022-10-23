@@ -23,16 +23,22 @@ async def get(
             qs |= query
 
         companies = await tables.Company.filter(qs).limit(40)
-        await tables.Company.fetch_for_list(companies, "exhibitor")
+        if companies:
+            await tables.Company.fetch_for_list(companies, "exhibitor")
         return companies
 
-    if set(kwargs) & set([f.model_field_name for f in tables.User._meta.fields_map.values() if f.unique]):
-        company = await tables.Company.get_or_none(**kwargs)
-        await tables.Company.fetch_related(company, "exhibitor")
+
+    if set(kwargs) & set([f.model_field_name for f in tables.Company._meta.fields_map.values() if f.unique]):
+        company = await tables.Company.get_or_none(*args, **kwargs)
+        if company:
+            await tables.Company.fetch_related(company, "exhibitor")
         return company
-    company = await tables.Company.filter(*args, **kwargs).limit(40)
-    await tables.User.fetch_for_list(company, "exhibitor")
-    return company
+
+    companies = await tables.Company.filter(*args, **kwargs).limit(40)
+    if companies:
+        await tables.Company.fetch_for_list(companies, "exhibitor")
+    return companies
+
 
 
 async def create(**kwargs) -> tables.Company:

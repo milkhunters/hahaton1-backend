@@ -22,15 +22,19 @@ async def get(
             qs |= query
 
         users = await tables.User.filter(qs).limit(40)
-        await tables.User.fetch_for_list(users, "company")
+        if users:
+            await tables.User.fetch_for_list(users, "company")
         return users
 
     if set(kwargs) & set([f.model_field_name for f in tables.User._meta.fields_map.values() if f.unique]):
         user = await tables.User.filter(**kwargs).first()
-        await user.fetch_related("company")
+        if user:
+            await user.fetch_related("company")
         return user
+
     users = await tables.User.filter(*args, **kwargs).limit(40)
-    await tables.User.fetch_for_list(users, "company")
+    if users:
+        await tables.User.fetch_for_list(users, "company")
     return users
 
 
