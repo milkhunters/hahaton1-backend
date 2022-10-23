@@ -26,7 +26,7 @@ async def authenticate(
     :return:
     """
 
-    user = await repository.user.get_user(username=login)
+    user = await repository.user.get(username=login)
     if not user:
         raise APIError(904)
     if not utils.verify_password(password, user.hashed_password):
@@ -84,7 +84,7 @@ async def refresh_tokens(
     """
     current_tokens = jwt.get_jwt_cookie(request)
     session_id = session.get_session_id(request)
-    user = await repository.user.get_user(id=jwt.decode_refresh_token(current_tokens.refresh_token).id)
+    user = await repository.user.get(id=jwt.decode_refresh_token(current_tokens.refresh_token).id)
 
     if not (UserStates(user.state_id) == UserStates.active):
         raise APIError(906)
