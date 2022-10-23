@@ -38,7 +38,6 @@ async def get_user(
         user = await repository.user.get(query=query)
     else:
         user = await repository.user.get()
-        print(user[2].company.id)
     if not user:
         raise APIError(api_code=919)
     return user

@@ -1,15 +1,10 @@
 from typing import Optional, Union
 
-from fastapi import APIRouter, Depends
-from fastapi.requests import Request
-from fastapi.responses import Response
-from config import load_docs
-from dependencies import JWTCookie
-from exceptions.api import APIError
+from fastapi import APIRouter
 from models import schemas
 from services import repository
 
-from views import ErrorAPIResponse, UserOutResponse, LoginResponse, RegisterResponse
+from views import ErrorAPIResponse
 from views.companies import CompanyResponse
 
 router = APIRouter(prefix="/company", responses={"400": {"model": ErrorAPIResponse}})
