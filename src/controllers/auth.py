@@ -8,10 +8,9 @@ from config import load_docs
 from dependencies import JWTCookie
 from exceptions.api import APIError
 from services.auth import authenticate, logout, refresh_tokens
-from views import ErrorAPIResponse, LoginResponse, RegisterResponse, UserResponse
+from views import ErrorAPIResponse, RegisterResponse, UserResponse
 from models import schemas
 from services import repository
-from views.companies import CompanyResponse
 
 router = APIRouter(responses={"400": {"model": ErrorAPIResponse}})
 docs = load_docs("auth.ini")
@@ -27,6 +26,8 @@ async def sign_up(
         user: schemas.UserSignUp,
         is_auth=Depends(JWTCookie(auto_error=False)),
 ):
+    if len(user.inn) != 12:
+        raise APIError(api_code=911)
     if is_auth:
         raise APIError(920)
     if await repository.user.get(username__iexact=user.username):

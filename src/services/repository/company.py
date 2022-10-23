@@ -9,12 +9,7 @@ from src.models import UserStates
 from src.utils import get_hashed_password
 
 
-async def get(*args, **kwargs) -> Optional[tables.Company]:
-    return await tables.Company.filter(*args, **kwargs).first()
-
-
-async def get_companies(
-        id: int = None,
+async def get(
         query: str = None,
         *args, **kwargs
 ) -> Union[List[tables.Company], tables.Company, None]:
@@ -31,11 +26,13 @@ async def get_companies(
         await tables.Company.fetch_for_list(companies, "exhibitor")
         return companies
 
-    if id:
-        company = await tables.Company.get_or_none(id=id)
+    if set(kwargs) & set([f.model_field_name for f in tables.User._meta.fields_map.values() if f.unique]):
+        company = await tables.Company.get_or_none(**kwargs)
         await tables.Company.fetch_related(company, "exhibitor")
         return company
-    return await tables.Company.filter(*args, **kwargs).limit(40)
+    company = await tables.Company.filter(*args, **kwargs).limit(40)
+    await tables.User.fetch_for_list(company, "exhibitor")
+    return company
 
 
 async def create(**kwargs) -> tables.Company:
