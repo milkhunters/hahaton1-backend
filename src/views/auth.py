@@ -5,5 +5,5 @@ class LoginResponse(User):
     pass
 
 
-class RegisterResponse(User):
+class RegisterResponse(str):
     pass
