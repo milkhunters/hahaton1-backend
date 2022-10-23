@@ -12,7 +12,11 @@ router = APIRouter(prefix="/company", responses={"400": {"model": ErrorAPIRespon
 
 @router.get("/get", response_model=Union[list[CompanyResponse], CompanyResponse])
 async def get(company_id: Optional[int] = None, query: Optional[str] = None):
-    return await repository.company.get_companies(id=company_id, query=query)
+    if company_id:
+        return await repository.company.get(id=company_id)
+    elif query:
+        return await repository.company.get(query=query)
+    return await repository.company.get()
 
 
 @router.post("/update", response_model=CompanyResponse)
