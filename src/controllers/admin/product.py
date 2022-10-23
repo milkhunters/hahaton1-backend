@@ -1,8 +1,10 @@
-from typing import Optional
+from typing import Optional, Union
 
 from fastapi import APIRouter, Depends
 from fastapi.requests import Request
 from fastapi.responses import Response
+
+import views
 from config import load_docs
 from dependencies import JWTCookie
 from exceptions.api import APIError
@@ -15,8 +17,3 @@ from views import ErrorAPIResponse, UserOutResponse, LoginResponse, RegisterResp
 router = APIRouter(prefix="/product", responses={"400": {"model": ErrorAPIResponse}})
 
 
-@router.get(
-    "/get"
-)
-async def get_products():
-    return await repository.product.get()

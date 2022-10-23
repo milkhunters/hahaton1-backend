@@ -149,6 +149,36 @@ class ProductCatalogCreate(BaseModel):
     arbitrarily_price_text: Optional[str]
 
 
+class ProductImagesCreate(BaseModel):
+    image: str
+
+
+class ProductCreate(BaseModel):
+    type: ProductType
+    manufacturer: str
+    trademark: str
+    title: str
+    images: Optional[list['ProductImages']]
+    cover: Optional[str]
+    video: Optional[str]
+    description: Optional[str]
+    price: float
+    company: Optional[Any]
+    category: Optional['ProductCategory']
+    purchase_type: PurchaseType
+    min_lot: Optional[int]
+    payment_type: PaymentType
+    delivery_type: DeliveryType
+    import_substitution_shield: bool
+    compliance: Optional[str]
+    analogs: Optional[str]
+    public_state: PublicStates
+    catalog: Optional['ProductCatalog']
+    verification_info: Optional[list[ProductVerificationInfo]]
+    create_time: datetime
+    update_time: Optional[datetime]
+    
+
 Product.update_forward_refs()
 ProductCategory.update_forward_refs()
 ProductCatalog.update_forward_refs()

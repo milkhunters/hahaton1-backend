@@ -1,12 +1,8 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends
-from fastapi.requests import Request
-from fastapi.responses import Response
+from fastapi import APIRouter
 from config import load_docs
-from dependencies import JWTCookie
 from exceptions.api import APIError
-from models import schemas
 from models.state import VerificationState, UserStates, PublicStates
 from services import repository
 
