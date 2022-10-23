@@ -21,7 +21,7 @@ async def update_category(category_id: int, category: schemas.ProductCategory):
     return await repository.product.update_category(category_id, **category.dict(exclude_unset=True))
 
 
-@router.post("/deleteCategory", response_model=schemas.ProductCategory)
+@router.delete("/deleteCategory", response_model=schemas.ProductCategory)
 async def delete_category(category_id: int):
     return await repository.product.delete_category(category_id)
 
