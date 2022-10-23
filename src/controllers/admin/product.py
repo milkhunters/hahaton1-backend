@@ -19,4 +19,4 @@ router = APIRouter(prefix="/product", responses={"400": {"model": ErrorAPIRespon
     "/get"
 )
 async def get_products():
-    return await repository.product.get_products()
+    return await repository.product.get()

@@ -48,7 +48,7 @@ class JWTMiddleware(BaseHTTPMiddleware):
         # Обновление токенов
         if is_need_update:
             user_id = self.jwt.decode_refresh_token(current_tokens.refresh_token).id
-            user = await self.UserRepo.get_user(id=user_id)
+            user = await self.UserRepo.get(id=user_id)
             if user:
                 new_payload = schemas.TokenPayload(
                     id=user.id,

@@ -11,4 +11,3 @@ from views import ErrorAPIResponse, UserOutResponse, LoginResponse, RegisterResp
 
 router = APIRouter(responses={"400": {"model": ErrorAPIResponse}})
 docs = load_docs("admin.ini")
-
