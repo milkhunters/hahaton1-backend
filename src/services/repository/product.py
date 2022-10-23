@@ -80,3 +80,17 @@ async def create_category(catalog_id: int, **kwargs) -> tables.ProductCategory:
     catalog.categories.add(category)
     await catalog.save()
     return category
+
+
+async def update_category(category_id: int, **kwargs) -> tables.ProductCategory:
+    category = await tables.ProductCategory.get_or_none(id=category_id)
+    category = await tables.ProductCategory.update_from_dict(category, **kwargs)
+    await category.save()
+    return category
+
+
+async def delete_category(category_id: int) -> tables.ProductCategory:
+    category = await tables.ProductCategory.get_or_none(id=category_id)
+    await category.delete()
+    return category
+
