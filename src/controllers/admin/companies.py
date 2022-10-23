@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from fastapi import APIRouter, Depends
 from fastapi.requests import Request
@@ -15,9 +15,9 @@ from views.companies import CompanyResponse
 router = APIRouter(prefix="/company", responses={"400": {"model": ErrorAPIResponse}})
 
 
-@router.get("/get", response_model=list[CompanyResponse])
+@router.get("/get", response_model=Union[list[CompanyResponse], CompanyResponse])
 async def get(company_id: Optional[int] = None, query: Optional[str] = None):
-    return await repository.company.get_companies(query, id=company_id)
+    return await repository.company.get_companies(id=company_id, query=query)
 
 
 @router.post("/update", response_model=CompanyResponse)

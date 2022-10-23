@@ -8,7 +8,7 @@ from src.models import tables
 from models.state import VerificationState, PublicStates
 
 
-async def get(query: str = None, *args, **kwargs) -> Union[List[tables.Product], tables.Product, None]:
+async def get(id: int = None, query: str = None, *args, **kwargs) -> Union[List[tables.Product], tables.Product, None]:
     if query:
         fields = [f for f in tables.Product._meta.fields_map.values() if isinstance(f, CharField)]
         if query.isdigit():
@@ -18,9 +18,9 @@ async def get(query: str = None, *args, **kwargs) -> Union[List[tables.Product],
         for query in queries:
             qs |= query
         return await tables.Product.filter(qs)
-    if "id" in kwargs:
-        return await tables.Product.get_or_none(id=kwargs["id"])
-    return await tables.Product.filter(*args, **kwargs)
+    if id:
+        return await tables.Product.filter(id=id).first()
+    return await tables.Product.filter(*args, **kwargs).limit(40)
 
 
 async def create(**kwargs) -> tables.Product:
