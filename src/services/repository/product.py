@@ -4,8 +4,9 @@ from tortoise.expressions import Q
 from tortoise.fields import CharField, IntField
 
 from models.tables import Product
+from services import repository
 from src.models import tables
-from models.state import VerificationState, PublicStates
+from models.state import VerificationState, PublicStates, PriceStates
 
 
 async def get(id: int = None, query: str = None, *args, **kwargs) -> Union[List[tables.Product], tables.Product, None]:
@@ -63,3 +64,13 @@ async def verify_product_category(product_category_id: int, state: VerificationS
     elif state.denied:
         product_category.public_state = PublicStates.denied
     await product_category.save()
+
+
+async def create_catalog(company_id: int, **kwargs) -> tables.ProductCatalog:
+    company = await repository.company.get(id=company_id)
+    catalog = await tables.ProductCatalog.create(**kwargs)
+    company.catalog = catalog
+    await company.save()
+    return catalog
+
+
