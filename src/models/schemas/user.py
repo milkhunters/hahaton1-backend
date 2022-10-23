@@ -51,7 +51,7 @@ class UserSignUp(BaseModel):
     inn: str
 
     @validator("inn")
-    def inn_validator(cls, value: str):
+    def inn_validator(cls, value):
         if not value.isdigit():
             raise ValidationError
         if int(value) != 12:
