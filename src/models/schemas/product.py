@@ -26,7 +26,7 @@ class ProductVerificationInfo(BaseModel):
 
 class Product(BaseModel):
     """
-    The Product model
+    The product model
     """
 
     id: int
@@ -96,6 +96,30 @@ class ProductCatalog(BaseModel):
     arbitrarily_price_text: Optional[str]
     create_time: datetime
     update_time: Optional[datetime]
+
+
+class ProductImagesUpdate(BaseModel):
+    image: str
+
+
+class ProductUpdate(BaseModel):
+    type: Optional[ProductType]
+    manufacturer: Optional[str]
+    trademark: Optional[str]
+    title: Optional[str]
+    images: Optional[list['ProductImagesUpdate']]
+    cover: Optional[str]
+    video: Optional[str]
+    description: Optional[str]
+    price: Optional[float]
+    purchase_type: Optional[PurchaseType]
+    min_lot: Optional[int]
+    payment_type: Optional[PaymentType]
+    delivery_type: Optional[DeliveryType]
+    import_substitution_shield: Optional[bool]
+    compliance: Optional[str]
+    analogs: Optional[str]
+    public_state: Optional[PublicStates]
 
 
 Product.update_forward_refs()

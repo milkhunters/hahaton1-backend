@@ -4,3 +4,4 @@ from .auth import LoginResponse
 from .auth import RegisterResponse
 from .user import UserResponse
 from .user import UserOutResponse
+from .product import ProductResponse

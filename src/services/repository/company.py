@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Union
 from tortoise.expressions import Q
 from tortoise.fields import CharField, IntField
 
@@ -13,17 +13,29 @@ async def get(*args, **kwargs) -> Optional[tables.Company]:
     return await tables.Company.filter(*args, **kwargs).first()
 
 
-async def get_companies(query: str = None, *args, **kwargs) -> Optional[List[tables.Company]]:
+async def get_companies(
+        id: int = None,
+        query: str = None,
+        *args, **kwargs
+) -> Union[List[tables.Company], tables.Company, None]:
     if query:
-        fields = [f for f in tables.Company._meta.fields if isinstance(f, CharField)]
+        fields = [f for f in tables.Company._meta.fields_map.values() if isinstance(f, CharField)]
         if query.isdigit():
-            fields += [f for f in tables.Company._meta.fields if isinstance(f, IntField)]
+            fields += [f for f in tables.Company._meta.fields_map.values() if isinstance(f, IntField)]
         queries = [Q(**{f.model_field_name: query}) for f in fields]
         qs = Q()
         for query in queries:
             qs |= query
-        return await tables.Company.filter(qs)
-    return await tables.Company.filter(*args, **kwargs)
+
+        companies = await tables.Company.filter(qs).limit(40)
+        await tables.Company.fetch_for_list(companies, "exhibitor")
+        return companies
+
+    if id:
+        company = await tables.Company.get_or_none(id=id)
+        await tables.Company.fetch_related(company, "exhibitor")
+        return company
+    return await tables.Company.filter(*args, **kwargs).limit(40)
 
 
 async def create(**kwargs) -> tables.Company:

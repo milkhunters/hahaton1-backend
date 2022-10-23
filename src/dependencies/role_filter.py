@@ -23,7 +23,7 @@ class MinRoleFilter:
         self._auto_error = auto_error
 
     def __call__(self, request: Request) -> None:
-        user_role: Role = request.user.role
+        user_role: Role = request.user.role()
         if user_role.value() >= self._role.value(): # todo после дополнения роли, исправить
             return
 

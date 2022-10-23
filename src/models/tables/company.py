@@ -15,7 +15,7 @@ class Company(models.Model):
     category = fields.ForeignKeyField('models.CompanyCategories', related_name="companies", null=True)
     exhibitor: fields.ReverseRelation['User']
     company_url = fields.CharField(255, null=True)
-    products: fields.ReverseRelation["Product"]
+    products: fields.ReverseRelation["product"]
     emails: fields.ReverseRelation['Email']
     catalog = fields.ForeignKeyField('models.ProductCatalog', related_name="companies", null=True)
     partners = fields.ReverseRelation['Partner']

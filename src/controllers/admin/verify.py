@@ -23,7 +23,7 @@ docs = load_docs("verify.py")
     # description=docs["exhibitor"]["description"]
 )
 async def verify_exhibitor(exhibitor_id: int, comment: str, is_accept: bool):
-    user = await repository.user.get_user(id=exhibitor_id)
+    user = await repository.user.get(id=exhibitor_id)
     if not user:
         raise APIError(904)
     if UserStates(user.state_id) == UserStates.active:

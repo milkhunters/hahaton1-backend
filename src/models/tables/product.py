@@ -35,7 +35,7 @@ class ProductVerificationInfo(models.Model):
 
 class Product(models.Model):
     """
-    The Product model
+    The product model
     """
 
     id = fields.IntField(pk=True)
