@@ -25,11 +25,13 @@ async def get(
         await tables.User.fetch_for_list(users, "company")
         return users
 
-    if [f for f in tables.User._meta.fields_map.values() if f.unique]:
+    if set(kwargs) & set([f.model_field_name for f in tables.User._meta.fields_map.values() if f.unique]):
         user = await tables.User.filter(**kwargs).first()
         await user.fetch_related("company")
         return user
-    return await tables.User.filter(*args, **kwargs).limit(40)
+    users = await tables.User.filter(*args, **kwargs).limit(40)
+    await tables.User.fetch_for_list(users, "company")
+    return users
 
 
 async def get_users(*args, **kwargs) -> Optional[List[tables.User]]:
