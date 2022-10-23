@@ -12,7 +12,11 @@ router = APIRouter()
 
 @router.get("/get", response_model=Union[list[views.ProductResponse], views.ProductResponse])
 async def get(product_id: Optional[int] = None, query: Optional[str] = None):
-    await repository.product.get(query=query, id=product_id)
+    if product_id:
+        return await repository.product.get(id=product_id)
+    elif query:
+        return await repository.product.get(query=query)
+    return await repository.product.get()
 
 
 # @router.get("/create", response_model=)
